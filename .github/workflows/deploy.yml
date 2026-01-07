@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-# 🔐 REQUIRED FOR OIDC
+# 🔐 REQUIRED FOR OIDC AUTHENTICATION
 permissions:
   id-token: write
   contents: read
@@ -19,8 +19,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # 2️⃣ Login to Azure using OIDC (NO secrets)
-    - name: Login to Azure (OIDC)
+    # 2️⃣ Login to Azure using OIDC (NO secrets, NO clientSecret)
+    - name: Login to Azure using OIDC
       uses: azure/login@v2
       with:
         client-id: ${{ vars.AZURE_CLIENT_ID }}
@@ -32,7 +32,7 @@ jobs:
       run: |
         zip -r site.zip index.html
 
-    # 4️⃣ Deploy ZIP to Azure App Service
+    # 4️⃣ Deploy to Azure App Service
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
