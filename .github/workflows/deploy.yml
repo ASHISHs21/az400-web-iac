@@ -1,26 +1,38 @@
-name: Deploy Website to Azure App Service
+name: Deploy Website to Azure App Service (OIDC)
 
 on:
   push:
     branches:
       - main
 
+# 🔐 REQUIRED FOR OIDC
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+    # 1️⃣ Checkout source code
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Login to Azure
+    # 2️⃣ Login to Azure using OIDC (NO secrets)
+    - name: Login to Azure (OIDC)
       uses: azure/login@v2
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        client-id: ${{ vars.AZURE_CLIENT_ID }}
+        tenant-id: ${{ vars.AZURE_TENANT_ID }}
+        subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Zip website
-      run: zip -r site.zip index.html
+    # 3️⃣ Create ZIP package of website
+    - name: Create ZIP package
+      run: |
+        zip -r site.zip index.html
 
+    # 4️⃣ Deploy ZIP to Azure App Service
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
