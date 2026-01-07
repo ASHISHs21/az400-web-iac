@@ -18,3 +18,12 @@ Thumbs.db
 # Editors
 .vscode/
 .idea/
+
+
+
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+*.tfvars
+*.zip
+.vscode/

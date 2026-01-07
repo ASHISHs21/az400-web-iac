@@ -1,0 +1,27 @@
+name: Promote GREEN to Production
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  swap:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - run: |
+          az webapp deployment slot swap \
+            --resource-group rg-az400-iac \
+            --name az400-web-3a9f0512 \
+            --slot green \
+            --target-slot production
