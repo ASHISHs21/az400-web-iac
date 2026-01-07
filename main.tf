@@ -51,7 +51,7 @@ resource "azurerm_service_plan" "plan" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = "S1"
 }
 
 ############################################
@@ -62,6 +62,17 @@ resource "azurerm_linux_web_app" "web" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   service_plan_id     = azurerm_service_plan.plan.id
+
+  site_config {
+    always_on = false
+  }
+}
+############################################
+# GREEN Deployment Slot
+############################################
+resource "azurerm_linux_web_app_slot" "green" {
+  name           = "green"
+  app_service_id = azurerm_linux_web_app.web.id
 
   site_config {
     always_on = false
