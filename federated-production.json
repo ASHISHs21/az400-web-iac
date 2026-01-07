@@ -1,0 +1,8 @@
+﻿{
+  "name": "github-production-env",
+  "issuer": "https://token.actions.githubusercontent.com",
+  "subject": "repo:ASHISHs21/az400-web-iac:environment:production",
+  "audiences": [
+    "api://AzureADTokenExchange"
+  ]
+}
