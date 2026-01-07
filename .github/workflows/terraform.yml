@@ -12,11 +12,19 @@ permissions:
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ✅ INSTALL TERRAFORM
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
 
       - name: Login to Azure (OIDC)
-        uses: azure/login@v2
+        uses: azure compt azure/login@v2
         with:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
@@ -31,11 +39,20 @@ jobs:
   terraform-apply:
     needs: terraform-plan
     runs-on: ubuntu-latest
+
     environment:
       name: production
       url: https://az400-web-3a9f0512.azurewebsites.net
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ✅ INSTALL TERRAFORM
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
 
       - name: Login to Azure (OIDC)
         uses: azure/login@v2
