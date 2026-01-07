@@ -17,14 +17,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ INSTALL TERRAFORM
+      # ✅ Install Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
 
+      # ✅ CORRECT Azure Login Action
       - name: Login to Azure (OIDC)
-        uses: azure compt azure/login@v2
+        uses: azure/login@v2
         with:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
@@ -48,12 +49,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ INSTALL TERRAFORM
+      # ✅ Install Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
 
+      # ✅ CORRECT Azure Login Action
       - name: Login to Azure (OIDC)
         uses: azure/login@v2
         with:
